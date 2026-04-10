@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Evan Oseen</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polygon points='50,2 98,26 98,74 50,98 2,74 2,26' fill='%2300d4ff'/><text x='50' y='62' text-anchor='middle' fill='%23000' font-size='34' font-family='Arial,sans-serif' font-weight='900'>EO</text></svg>"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#000;
+      --surface:#0a0a0a;
+      --card:#0f0f0f;
+      --border:#1a1a1a;
+      --accent:#00d4ff;
+      --accent2:#0099cc;
+      --text:#fff;
+      --muted:#555;
+      --muted2:#888;
+      --mono:'JetBrains Mono',monospace;
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+    ::-webkit-scrollbar{width:3px}
+    ::-webkit-scrollbar-track{background:#000}
+    ::-webkit-scrollbar-thumb{background:var(--accent)}
+    a{text-decoration:none}
+
+    /* ── NAV ── */
+    nav{
+      position:fixed;top:0;left:0;right:0;z-index:1000;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:20px 60px;transition:background 0.3s;
+    }
+    nav.scrolled{background:rgba(0,0,0,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+    .nav-logo{
+      width:46px;height:46px;background:var(--accent);
+      display:flex;align-items:center;justify-content:center;
+      font-weight:900;font-size:0.95rem;color:#000;
+      clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+    }
+    .nav-links{display:flex;gap:40px;list-style:none}
+    .nav-links a{color:var(--muted2);font-size:0.88rem;font-weight:500;transition:color 0.2s}
+    .nav-links a:hover{color:#fff}
+
+    /* ── HERO ── */
+    #hero{
+      min-height:100vh;display:grid;grid-template-columns:1fr 1fr;
+      column-gap:20px;align-items:center;
+      padding:120px 14vw 60px;
+      position:relative;overflow:hidden;
+    }
+    .hero-glow{
+      position:absolute;top:-20%;left:-10%;width:55%;height:80%;
+      background:radial-gradient(ellipse,rgba(0,212,255,0.1) 0%,transparent 65%);
+      pointer-events:none;
+    }
+    .hero-badge{
+      display:inline-flex;align-items:center;gap:8px;
+      border:1px solid #1a1a1a;padding:8px 16px;border-radius:4px;
+      font-size:0.7rem;letter-spacing:3px;text-transform:uppercase;
+      color:var(--muted2);margin-bottom:20px;font-family:var(--mono);
+    }
+    .hero-badge-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.2}}
+    .hero-headline{
+      font-size:clamp(3.2rem,6.5vw,6.5rem);font-weight:900;
+      line-height:0.95;margin-bottom:18px;letter-spacing:-3px;
+    }
+    .hero-headline .accent{color:var(--accent)}
+    .hero-role{font-size:1rem;margin-bottom:8px;color:var(--muted2)}
+    .hero-role .typed{color:var(--accent);font-weight:600}
+    .hero-sub{font-size:0.95rem;color:var(--muted2);line-height:1.6;margin-bottom:32px}
+    .cursor{display:inline-block;width:2px;height:1em;background:var(--accent);margin-left:2px;vertical-align:middle;animation:blink 1s step-end infinite}
+    @keyframes blink{50%{opacity:0}}
+    .hero-socials{display:flex;gap:10px;margin-bottom:16px}
+    .social-btn{
+      width:42px;height:42px;border:1px solid var(--border);border-radius:8px;
+      display:flex;align-items:center;justify-content:center;
+      color:var(--muted2);font-size:0.95rem;transition:all 0.2s;
+    }
+    .social-btn:hover{border-color:var(--accent);color:var(--accent)}
+    .hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+    .btn-main{
+      display:inline-flex;align-items:center;gap:8px;
+      background:var(--accent);color:#000;padding:13px 26px;
+      border-radius:6px;font-weight:700;font-size:0.88rem;transition:all 0.2s;
+    }
+    .btn-main:hover{background:var(--accent2);transform:translateY(-2px)}
+    .btn-ghost{
+      display:inline-flex;align-items:center;gap:8px;
+      background:transparent;color:#fff;border:1px solid var(--border);
+      padding:13px 26px;border-radius:6px;font-weight:600;font-size:0.88rem;transition:all 0.2s;
+    }
+    .btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+
+    /* ── CODE BLOCK ── */
+    .code-block{
+      background:#0d1117;border:1px solid #21262d;border-radius:12px;
+      overflow:hidden;font-family:var(--mono);font-size:0.8rem;
+      box-shadow:0 0 60px rgba(0,212,255,0.06);
+    }
+    .code-header{
+      background:#161b22;padding:12px 16px;
+      display:flex;align-items:center;gap:8px;border-bottom:1px solid #21262d;
+    }
+    .dot{width:12px;height:12px;border-radius:50%}
+    .dot.r{background:#ff5f57}.dot.y{background:#febc2e}.dot.g{background:#28c840}
+    .code-filename{margin-left:auto;color:#8b949e;font-size:0.72rem}
+    .code-body{padding:24px;line-height:1.85}
+    .c-cm{color:#8b949e}.c-kw{color:#ff7b72}.c-df{color:#d2a8ff}
+    .c-st{color:#a5d6ff}.c-ky{color:#7ee787}.c-vl{color:#ffa657}
+    .c-bl{color:#79c0ff}.c-fn{color:#d2a8ff}.c-pr{color:#e6edf3}
+
+    /* ── HERO PHOTO ── */
+    .hero-photo-wrap{position:relative;display:flex;justify-content:center;align-items:center}
+    .hero-photo{
+      width:340px;height:340px;border-radius:50%;
+      object-fit:cover;object-position:top;
+      border:3px solid var(--accent);
+      box-shadow:0 0 80px rgba(0,212,255,0.18);
+    }
+    .hero-photo-ring{
+      position:absolute;width:368px;height:368px;border-radius:50%;
+      border:1px dashed rgba(0,212,255,0.25);
+      top:50%;left:50%;transform:translate(-50%,-50%);
+      animation:spin 20s linear infinite;
+    }
+    @media(max-width:900px){.hero-photo{width:240px;height:240px}.hero-photo-ring{width:264px;height:264px}}
+
+    /* ── SECTION COMMONS ── */
+    .section-wrap{padding:120px 60px;max-width:1200px;margin:0 auto}
+    .eyebrow{font-family:var(--mono);font-size:0.72rem;color:var(--accent);letter-spacing:3px;text-transform:uppercase;margin-bottom:14px}
+    .heading{font-size:clamp(2rem,4vw,2.8rem);font-weight:800;letter-spacing:-1px;margin-bottom:48px}
+    .heading span{color:var(--accent)}
+
+    /* ── ABOUT ── */
+    .about-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:80px;align-items:start}
+    .about-photo-wrap{position:relative;display:flex;justify-content:center}
+    .about-photo{
+      width:260px;height:260px;border-radius:50%;
+      object-fit:cover;object-position:top;
+      border:3px solid var(--accent);
+      box-shadow:0 0 40px rgba(0,212,255,0.2);
+    }
+    .about-photo-ring{
+      position:absolute;width:280px;height:280px;border-radius:50%;
+      border:1px dashed rgba(0,212,255,0.2);
+      top:50%;left:50%;transform:translate(-50%,-50%);
+      animation:spin 20s linear infinite;
+    }
+    @keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+    .about-text{color:var(--muted2);line-height:1.8;font-size:0.92rem;margin-bottom:14px}
+    .about-stats{display:flex;gap:32px;margin-top:32px}
+    .stat{border-left:2px solid var(--accent);padding-left:14px}
+    .stat-n{font-size:2rem;font-weight:900;color:var(--accent);font-family:var(--mono);line-height:1}
+    .stat-l{font-size:0.72rem;color:var(--muted2);margin-top:4px}
+
+    /* ── EXP LOGO ── */
+    .exp-logo{
+      width:44px;height:44px;border-radius:10px;margin-bottom:12px;
+      display:flex;align-items:center;justify-content:center;
+      font-weight:800;font-size:0.9rem;letter-spacing:1px;flex-shrink:0;
+    }
+
+    /* ── EXPERIENCE ── */
+    .exp-list{display:flex;flex-direction:column;gap:0}
+    .exp-item{
+      display:grid;grid-template-columns:200px 1fr;
+      border-bottom:1px solid var(--border);padding:40px 0;
+      transition:background 0.2s;
+    }
+    .exp-item:first-child{border-top:1px solid var(--border)}
+    .exp-item:hover .exp-company{color:var(--accent)}
+    .exp-left{padding-right:40px}
+    .exp-date{font-family:var(--mono);font-size:0.72rem;color:var(--accent);margin-bottom:8px}
+    .exp-company{font-size:1rem;font-weight:700;margin-bottom:4px;transition:color 0.2s}
+    .exp-loc{font-size:0.75rem;color:var(--muted2)}
+    .exp-right{}
+    .exp-role{
+      font-size:1.1rem;font-weight:700;margin-bottom:4px;
+    }
+    .exp-type{font-size:0.78rem;color:var(--accent);font-family:var(--mono);margin-bottom:16px}
+    .exp-bullets{list-style:none;display:flex;flex-direction:column;gap:6px}
+    .exp-bullets li{
+      font-size:0.83rem;color:var(--muted2);line-height:1.65;
+      padding-left:16px;position:relative;
+    }
+    .exp-bullets li::before{content:'▸';position:absolute;left:0;color:var(--accent);font-size:0.65rem;top:5px}
+
+    /* ── MARQUEE ── */
+    #skills{overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:60px 0}
+    .marquee-label{text-align:center;font-family:var(--mono);font-size:0.7rem;color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-bottom:32px}
+    .marquee-row{display:flex;width:max-content;animation:marquee 28s linear infinite}
+    .marquee-row.rev{animation-direction:reverse;animation-duration:22s}
+    @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    .tech-pill{
+      display:flex;align-items:center;gap:8px;
+      padding:10px 20px;margin:4px 6px;
+      border:1px solid var(--border);border-radius:999px;
+      font-size:0.8rem;font-weight:500;white-space:nowrap;
+      transition:border-color 0.2s;
+    }
+    .tech-pill:hover{border-color:var(--accent)}
+    .tech-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0}
+
+    /* ── PROJECTS ── */
+    .proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .proj-card{
+      background:var(--card);border:1px solid var(--border);
+      border-radius:12px;padding:26px;display:flex;flex-direction:column;
+      transition:all 0.3s;position:relative;overflow:hidden;
+    }
+    .proj-card.featured{grid-column:span 2}
+    .proj-card::before{
+      content:'';position:absolute;top:0;left:0;right:0;height:1px;
+      background:linear-gradient(90deg,var(--accent),transparent);
+      transform:scaleX(0);transform-origin:left;transition:transform 0.3s;
+    }
+    .proj-card:hover::before{transform:scaleX(1)}
+    .proj-card:hover{border-color:rgba(0,212,255,0.2);transform:translateY(-5px);box-shadow:0 20px 40px rgba(0,0,0,0.5)}
+    .proj-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+    .proj-num{font-family:var(--mono);font-size:0.7rem;color:var(--muted)}
+    .proj-link{color:var(--muted2);font-size:0.78rem;transition:color 0.2s}
+    .proj-link:hover{color:var(--accent)}
+    .proj-title{font-size:1.05rem;font-weight:700;margin-bottom:8px}
+    .proj-desc{color:var(--muted2);font-size:0.8rem;line-height:1.7;flex:1;margin-bottom:18px}
+    .proj-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto}
+    .proj-tag{
+      font-family:var(--mono);font-size:0.66rem;padding:3px 9px;
+      border-radius:4px;background:rgba(0,212,255,0.06);
+      border:1px solid rgba(0,212,255,0.12);color:var(--accent);
+    }
+
+    /* ── CERTS ── */
+    .cert-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .cert-card{
+      background:var(--card);border:1px solid var(--border);
+      border-radius:10px;padding:22px;text-align:center;transition:all 0.2s;
+    }
+    .cert-card:hover{border-color:var(--accent);transform:translateY(-4px)}
+    .cert-icon{font-size:1.8rem;margin-bottom:10px}
+    .cert-name{font-size:0.8rem;font-weight:600;margin-bottom:4px;line-height:1.4}
+    .cert-by{font-size:0.7rem;color:var(--accent);font-family:var(--mono)}
+
+    /* ── CONTACT ── */
+    #contact{padding:120px 60px;text-align:center;position:relative;overflow:hidden}
+    .contact-glow{
+      position:absolute;bottom:-30%;left:50%;transform:translateX(-50%);
+      width:60%;height:60%;
+      background:radial-gradient(ellipse,rgba(0,212,255,0.07) 0%,transparent 65%);
+      pointer-events:none;
+    }
+    .contact-inner{position:relative;z-index:1;max-width:580px;margin:0 auto}
+    .contact-heading{font-size:clamp(2.5rem,6vw,4.5rem);font-weight:900;letter-spacing:-2px;line-height:1;margin-bottom:20px}
+    .contact-sub{color:var(--muted2);font-size:0.95rem;line-height:1.7;margin-bottom:36px}
+    .contact-email{display:block;font-family:var(--mono);font-size:1rem;color:var(--accent);margin-bottom:36px}
+    .contact-email:hover{text-decoration:underline}
+    .contact-btns{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+
+    /* ── HERO SKILL PILLS ── */
+    .hero-skill-pill{
+      background:rgba(0,212,255,0.06);border:1px solid rgba(0,212,255,0.18);
+      color:var(--accent);font-family:var(--mono);font-size:0.68rem;
+      padding:6px 14px;border-radius:999px;letter-spacing:0.5px;font-weight:500;
+    }
+
+    /* ── ABOUT CODE BLOCK ── */
+    .about-code{
+      background:#0d0f12;border:1px solid #21262d;border-radius:14px;
+      overflow:hidden;font-family:var(--mono);font-size:0.82rem;
+      box-shadow:0 0 50px rgba(0,212,255,0.07);
+    }
+    .about-code-header{
+      background:#161b22;padding:12px 16px;
+      display:flex;align-items:center;gap:8px;border-bottom:1px solid #21262d;
+    }
+    .about-code-body{padding:24px 20px;line-height:2}
+    .ac-ln{color:#404850;user-select:none;margin-right:16px;font-size:0.72rem}
+    .ac-kw{color:#ff7b72}.ac-vr{color:#79c0ff}.ac-st{color:#a5d6ff}
+    .ac-ky{color:#7ee787}.ac-vl{color:#ffa657}.ac-cm{color:#8b949e}
+    .ac-bl{color:#79c0ff}.ac-fn{color:#d2a8ff}
+
+    /* ── HERO BG + STATS ── */
+    #hero::after{
+      content:'';position:absolute;inset:0;
+      background-image:radial-gradient(circle,rgba(0,212,255,0.055) 1px,transparent 1px);
+      background-size:44px 44px;pointer-events:none;z-index:0;
+    }
+    #hero>*:not(.hero-glow){position:relative;z-index:1}
+    .hero-stats{display:flex;gap:36px;margin-top:24px;padding-top:20px;border-top:1px solid var(--border)}
+    .hero-stat-n{font-family:var(--mono);font-size:1.6rem;font-weight:700;color:var(--accent);line-height:1}
+    .hero-stat-l{font-size:0.7rem;color:var(--muted2);margin-top:5px;letter-spacing:0.5px}
+
+    /* ── CERT LOGOS ── */
+    .cert-logo-wrap{width:56px;height:56px;border-radius:10px;margin:0 auto 12px;
+      display:flex;align-items:center;justify-content:center;overflow:hidden}
+    .cert-logo-wrap svg{width:38px;height:38px}
+    .cert-logo-text{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:1rem;
+      letter-spacing:2px;display:flex;align-items:center;justify-content:center;
+      width:100%;height:100%;border-radius:10px}
+
+    /* ── PROJECT IMAGE ── */
+    .proj-img-wrap{position:relative;height:160px;border-radius:8px;overflow:hidden;margin-bottom:18px}
+    .proj-img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+    .proj-img-label{
+      position:absolute;bottom:0;left:0;right:0;
+      background:linear-gradient(transparent,rgba(0,0,0,0.85));
+      padding:20px 12px 8px;
+      font-family:var(--mono);font-size:0.65rem;letter-spacing:2px;
+      text-transform:uppercase;color:rgba(255,255,255,0.7);
+    }
+
+    /* ── PROJECT BANNER ── */
+    .proj-banner{
+      height:72px;border-radius:8px;margin-bottom:18px;
+      display:flex;align-items:center;justify-content:center;gap:10px;
+      font-family:var(--mono);font-size:0.68rem;letter-spacing:2px;text-transform:uppercase;font-weight:600;
+    }
+    .proj-banner svg{width:22px;height:22px;flex-shrink:0}
+
+    /* ── FOOTER ── */
+    footer{
+      border-top:1px solid var(--border);padding:28px 60px;
+      display:flex;justify-content:space-between;align-items:center;
+    }
+    .footer-logo{font-family:var(--mono);font-size:0.82rem;color:var(--muted2)}
+    .footer-logo span{color:var(--accent)}
+    .footer-copy{font-size:0.75rem;color:var(--muted)}
+
+    /* ── REVEAL ── */
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity 0.65s,transform 0.65s}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+    .reveal-left{opacity:0;transform:translateX(-28px);transition:opacity 0.65s,transform 0.65s}
+    .reveal-left.visible{opacity:1;transform:translateX(0)}
+    .reveal-right{opacity:0;transform:translateX(28px);transition:opacity 0.65s,transform 0.65s}
+    .reveal-right.visible{opacity:1;transform:translateX(0)}
+
+    /* ── INTRO ── */
+    #intro{
+      position:fixed;inset:0;background:#000;z-index:9999;
+      display:flex;align-items:center;justify-content:center;
+      flex-direction:column;gap:20px;
+    }
+    #intro.hide{
+      animation:introSlideUp 0.9s cubic-bezier(0.76,0,0.24,1) forwards;
+      pointer-events:none;
+    }
+    @keyframes introSlideUp{
+      0%{transform:translateY(0)}
+      100%{transform:translateY(-100%)}
+    }
+    #intro-logo{
+      width:80px;height:80px;background:var(--accent);
+      clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+      display:flex;align-items:center;justify-content:center;
+      font-weight:900;font-size:1.6rem;color:#000;font-family:'Inter',sans-serif;
+      opacity:0;animation:logoIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.3s forwards;
+    }
+    #intro-name{
+      font-family:'JetBrains Mono',monospace;font-size:0.75rem;
+      letter-spacing:8px;color:#fff;text-transform:uppercase;
+      opacity:0;animation:nameIn 0.7s ease 1s forwards;
+    }
+    #intro-bar{
+      width:0;height:1px;background:var(--accent);
+      animation:barIn 0.6s ease 1.7s forwards;
+    }
+    @keyframes logoIn{
+      from{opacity:0;transform:scale(0.4) rotate(-40deg)}
+      to{opacity:1;transform:scale(1) rotate(0deg)}
+    }
+    @keyframes nameIn{
+      from{opacity:0;letter-spacing:16px;transform:translateY(8px)}
+      to{opacity:1;letter-spacing:8px;transform:translateY(0)}
+    }
+    @keyframes barIn{from{width:0}to{width:100px}}
+
+    @media(max-width:900px){
+      nav{padding:16px 24px}.nav-links{display:none}
+      #hero{grid-template-columns:1fr;padding:100px 24px 60px}
+      .hero-photo{width:220px;height:220px}.hero-photo-ring{width:244px;height:244px}
+      .about-grid{grid-template-columns:1fr;gap:40px}
+      .exp-item{grid-template-columns:1fr;gap:12px}
+      .proj-grid{grid-template-columns:1fr}.proj-card.featured{grid-column:span 1}
+      .cert-grid{grid-template-columns:repeat(2,1fr)}
+      .section-wrap,#contact{padding-left:24px;padding-right:24px}
+      footer{flex-direction:column;gap:8px;text-align:center}
+    }
+  </style>
+</head>
+<body>
+
+<!-- INTRO -->
+<div id="intro">
+  <div id="intro-logo">EO</div>
+  <div id="intro-name">Evan Oseen</div>
+  <div id="intro-bar"></div>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a class="nav-logo" href="#">EO</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ══════════ HERO ══════════ -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div>
+    <div class="hero-badge"><span class="hero-badge-dot"></span>Rogers Cybersecurity Catalyst · 2025</div>
+    <h1 class="hero-headline">Evan<br><span class="accent">Oseen</span></h1>
+    <p class="hero-role">I'm <strong>Evan Oseen</strong>, a dedicated <span class="typed"></span><span class="cursor"></span></p>
+    <p class="hero-sub">building real-world cybersecurity tools and AI systems<br>that actually ship — from threat detection to LLM pipelines.</p>
+    <div class="hero-socials" style="margin-top:20px">
+      <a class="social-btn" href="https://github.com/evanoseen" target="_blank">
+        <svg width="17" height="17" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.6-4.04-1.6-.54-1.38-1.33-1.75-1.33-1.75-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 013-.4c1.02.005 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.82.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+      </a>
+      <a class="social-btn" href="https://linkedin.com/in/evanoseen" target="_blank">
+        <svg width="17" height="17" fill="currentColor" viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 110-4.14 2.07 2.07 0 010 4.14zm1.78 13.02H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.72V1.72C24 .77 23.21 0 22.23 0z"/></svg>
+      </a>
+      <a class="social-btn" href="mailto:Evan.E.Oseen@gmail.com">
+        <svg width="17" height="17" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+      </a>
+    </div>
+    <div class="hero-btns">
+      <a class="btn-main" href="#contact">Let's Collaborate ↗</a>
+      <a class="btn-ghost" href="#projects">View Projects</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="hero-stat-n">5+</div><div class="hero-stat-l">Projects Built</div></div>
+      <div><div class="hero-stat-n">4</div><div class="hero-stat-l">Certifications</div></div>
+      <div><div class="hero-stat-n">3+</div><div class="hero-stat-l">Years Coding</div></div>
+    </div>
+  </div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:24px;position:relative">
+    <div style="position:absolute;width:420px;height:420px;background:radial-gradient(ellipse,rgba(0,212,255,0.08) 0%,transparent 70%);border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none"></div>
+    <div class="hero-photo-wrap">
+      <div class="hero-photo-ring"></div>
+      <img class="hero-photo" src="evan.png" alt="Evan Oseen"/>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+      <div style="display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:0.72rem;color:var(--muted2)">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z" fill="#888"/></svg>
+        Toronto, ON · Canada
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:0.7rem;color:var(--accent);background:rgba(0,212,255,0.06);border:1px solid rgba(0,212,255,0.2);padding:5px 14px;border-radius:999px">
+        <span style="width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block;animation:pulse 2s infinite"></span>
+        Open to Internships & Co-ops
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ ABOUT ══════════ -->
+<section id="about" class="section-wrap">
+  <div class="about-grid">
+    <div class="reveal-left">
+      <div class="about-code">
+        <div class="about-code-header">
+          <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+          <div class="code-filename" style="margin-left:auto">● evan_oseen.ts</div>
+        </div>
+        <div class="about-code-body">
+          <div><span class="ac-ln">01</span><span class="ac-kw">const</span> <span class="ac-vr">evan</span> <span style="color:#e6edf3">= {</span></div>
+          <div><span class="ac-ln">02</span>&nbsp;&nbsp;<span class="ac-ky">name</span><span style="color:#e6edf3">: </span><span class="ac-st">'Evan Oseen'</span><span style="color:#e6edf3">,</span></div>
+          <div><span class="ac-ln">03</span>&nbsp;&nbsp;<span class="ac-ky">role</span><span style="color:#e6edf3">: </span><span class="ac-st">'Cybersecurity &amp; AI'</span><span style="color:#e6edf3">,</span></div>
+          <div><span class="ac-ln">04</span>&nbsp;&nbsp;<span class="ac-ky">location</span><span style="color:#e6edf3">: </span><span class="ac-st">'Toronto, ON'</span><span style="color:#e6edf3">,</span></div>
+          <div><span class="ac-ln">05</span>&nbsp;&nbsp;<span class="ac-ky">skills</span><span style="color:#e6edf3">: [</span><span class="ac-st">'Python'</span><span style="color:#e6edf3">, </span><span class="ac-st">'ML'</span><span style="color:#e6edf3">, </span><span class="ac-st">'RAG'</span><span style="color:#e6edf3">],</span></div>
+          <div><span class="ac-ln">06</span>&nbsp;&nbsp;<span class="ac-ky">certs</span><span style="color:#e6edf3">: </span><span class="ac-vl">4</span><span style="color:#e6edf3">,</span></div>
+          <div><span class="ac-ln">07</span>&nbsp;&nbsp;<span class="ac-ky">available</span><span style="color:#e6edf3">: </span><span class="ac-bl">true</span><span style="color:#e6edf3">,</span></div>
+          <div><span class="ac-ln">08</span>&nbsp;&nbsp;<span class="ac-ky">motto</span><span style="color:#e6edf3">: </span><span class="ac-st">"Build &amp; Secure"</span></div>
+          <div><span class="ac-ln">09</span><span style="color:#e6edf3">};</span></div>
+          <div>&nbsp;</div>
+          <div><span class="ac-ln">10</span><span class="ac-vr">evan</span><span style="color:#e6edf3">.</span><span class="ac-fn">deploy</span><span style="color:#e6edf3">();</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal-right">
+      <p class="eyebrow">About The Engineer</p>
+      <h2 class="heading" style="margin-bottom:24px">I'm Evan,<br>a <span>Security</span> &<br>AI Builder.</h2>
+      <p class="about-text">Business Technology Management and Cybersecurity student at Toronto Metropolitan University, currently interning at Rogers Cybersecurity Catalyst. I sit at the intersection of cybersecurity, artificial intelligence, and data engineering — building real tools that solve real problems.</p>
+      <p class="about-text">I don't just study technology, I ship it. Every project on my GitHub is live, deployed, and running in production — from an AI-powered crypto trading bot to a phishing URL detector trained on 10,000 URLs. If I can automate it or secure it, I will.</p>
+      <p class="about-text">Currently pursuing a minor in Cybersecurity alongside my BTM degree, with 4 cloud certifications from Google, IBM, Microsoft, and AWS.</p>
+      <div class="about-stats">
+        <div class="stat"><div class="stat-n">5+</div><div class="stat-l">Live Projects</div></div>
+        <div class="stat"><div class="stat-n">4</div><div class="stat-l">Cloud Certs</div></div>
+        <div class="stat"><div class="stat-n">3+</div><div class="stat-l">Years Experience</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ EXPERIENCE ══════════ -->
+<section id="experience" class="section-wrap" style="padding-top:0">
+  <p class="eyebrow reveal">Where I've Worked</p>
+  <h2 class="heading reveal">Professional <span>Journey</span></h2>
+  <div class="exp-list">
+
+    <div class="exp-item reveal">
+      <div class="exp-left">
+        <div class="exp-logo" style="background:#0a0a0a;border:1px solid #222;padding:3px">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAA4VBMVEVHcEwJXzwEsqkClYUAu0px3dYYcYQCeccDlYABeMoCu08Caj4qMjcEiKgGseMAt0dz3dOr2GYtMjgBZj0FqpsBZz09S1QsMTYEl4EGteYDt+d/y1gCpZEEuUun1mMDlHwAt+IAt+kTuuIOvN4At0VFR0sSGyMAaTwBloEBe8oBueam2GcAs6py3dQAuksOCxoEAQUFvksPLzIDc0Q+UlgBvusIp94VWn2u3W8KXT4Iq54BuK0pwuIHgT5459vQ19gMOFCH1m5m3N6S354LeqcFikYMosQGj0kLjEUbnVGgpaaGh9+9AAAAJnRSTlMAd4Xf8esJ8PDd3Lb+QoT+23rpmnHJt0Hka6B2/lGP0tHMwLfjxc0NCAEAAAFBSURBVCiRddLZcoIwFIDhuIEWK5W6Va12JQRSWQTc6la7v/8D9SQkUBz9rxi+ySFnBoSylDvbvlfQ6R5eocczWHmBKsdvb8v6QOIVPDSIepmaPtk7owz7dkyI1LLuQCOJfRsiqkB9z9BpJthgFsUSB3OOzoHhm510Iz/aTHB+2Gw2AhvZdRN1efGRcZ2HnmeapjuL7EjOVNpl6Mn3f7zfLVPvM4prKtRRUHvqT1h+4G05mjvYkhU+I7zm6K9dk49lgwWGKX67pkjiLJRj/a9A4o6Ikx2kaBesD7wQR713QmqsjlzlGuNpIIauKC3+XxMM40XAW1KaU24YW9BwRWlOCzhDa5ggbQmsL7gVegzHLW7LqkCjzg1VGZZQkZnVE9itw9kCkgi6tKz0J+oaBliKqFUtpSZL8VTaFNLOoKJhnLM/uiVJiUQtbdsAAAAASUVORK5CYII=" style="width:36px;height:36px;object-fit:contain" alt="Rogers"/>
+        </div>
+        <div class="exp-date">Oct 2025 – Present</div>
+        <div class="exp-company">Rogers Cybersecurity Catalyst</div>
+        <div class="exp-loc">Ontario, Canada</div>
+      </div>
+      <div class="exp-right">
+        <div class="exp-role">Cybersecurity Intern</div>
+        <div class="exp-type">Full-time · Internship</div>
+        <ul class="exp-bullets">
+          <li>Built Python data pipelines (pandas) to aggregate and clean cybersecurity workforce datasets.</li>
+          <li>Developed dashboards using Power BI, Tableau, and Excel to visualize workforce skill trends and insights for stakeholders.</li>
+          <li>Automated data cleaning workflows and standardized job titles to improve dataset consistency and accuracy.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-left">
+        <div class="exp-logo" style="background:#0a0a0a;border:1px solid #222;padding:3px">
+          <img src="data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='65.65%2084.64699999999999%20443.70010811110853%20451.4799981689453'%3e%3csvg%20xmlns='http://www.w3.org/2000/svg'%20xmlns:xlink='http://www.w3.org/1999/xlink'%20version='1.1'%20id='nnnn_1'%20x='135.65'%20y='154.647'%20viewBox='1678.919921875%20781.6400146484375%201642.16015625%201436.7200927734375'%20xml:space='preserve'%20height='265.7060965513572'%20width='303.7001081111085'%20preserveAspectRatio='xMinYMin'%20enable-background='new%200%200%205000%203000'%20style='overflow:%20visible;'%3e%3cpath%20class='st0'%20d='M2561.02,1305.49l760.06-509.28L2500,1199.8l-821.08-403.59l760.06,509.28l61.02,912.87L2561.02,1305.49z%20M2500,1270.26L2500,1270.26L2500,1270.26L2500,1270.26z'%20style='fill:%20%23F5F5F5;%20fill-opacity:%201;'%3e%3c/path%3e%3cpolygon%20class='st0'%20points='2253.42,1409.7%202308.19,1915.29%202316.62,1371.78%201853.16,1099.29%20'%20style='fill:%20%23F5F5F5;%20fill-opacity:%201;'%3e%3c/polygon%3e%3cpolygon%20class='st0'%20points='2744.04,1414.08%203154.51,1113.85%202679.61,1378.31%202675.35,1915.93%20'%20style='fill:%20%23F5F5F5;%20fill-opacity:%201;'%3e%3c/polygon%3e%3cpolygon%20class='st0'%20points='2502.53,987%202037.29,781.64%202503.77,1060.69%202971.49,795.57%20'%20style='fill:%20%23F5F5F5;%20fill-opacity:%201;'%3e%3c/polygon%3e%3c/svg%3e%3csvg%20y='433.457'%20viewBox='0%2016.829999923706055%20214.9600067138672%2032.66999816894531'%20x='180.01999908447266'%20height='32.66999816894531'%20width='214.9600067138672'%20style='overflow:%20visible;'%3e%3cg%20fill='%23F5F5F5'%20fill-opacity='1'%20style=''%3e%3cpath%20d='M4.69%2049.50L0%2049.50L20.11%2017.30L24.84%2017.30L44.86%2049.50L39.89%2049.50L22.31%2020.30L4.69%2049.50ZM37.45%2041.20L7.31%2041.20L9.38%2037.64L35.34%2037.64L37.45%2041.20ZM99.78%2049.50L61.90%2049.50L61.90%2016.83L66.40%2016.83L66.40%2045.98L99.78%2045.98L99.78%2049.50ZM122.73%2049.50L118.51%2049.50L118.51%2017.48L156.67%2017.48L156.67%2021L122.73%2021L122.73%2031.92L152.49%2031.92L152.49%2035.34L122.73%2035.34L122.73%2049.50ZM174.79%2049.50L170.10%2049.50L190.21%2017.30L194.94%2017.30L214.96%2049.50L209.99%2049.50L192.41%2020.30L174.79%2049.50ZM207.55%2041.20L177.41%2041.20L179.47%2037.64L205.44%2037.64L207.55%2041.20Z'%20transform='translate(0,%200)'%3e%3c/path%3e%3c/g%3e%3c/svg%3e%3c/svg%3e" style="width:36px;height:36px;object-fit:contain" alt="ALFA Club"/>
+        </div>
+        <div class="exp-date">2025 – Present</div>
+        <div class="exp-company">ALFA Club</div>
+        <div class="exp-loc">Ontario, Canada</div>
+      </div>
+      <div class="exp-right">
+        <div class="exp-role">Digital Operations</div>
+        <div class="exp-type">Part-time</div>
+        <ul class="exp-bullets">
+          <li>Managed CRM membership systems and scheduling platforms supporting daily operational workflows.</li>
+          <li>Provided technical support for POS and check-in systems while maintaining operational records.</li>
+          <li>Assisted with workflow improvements to streamline member onboarding and scheduling processes.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-left">
+        <div class="exp-logo" style="background:#fff;border:1px solid #222;padding:3px">
+          <img src="https://media.licdn.com/dms/image/v2/D4E0BAQHOpwYg6q1B9Q/company-logo_200_200/B4EZ1nroAWJ4AQ-/0/1775560983037/halian_logo?e=2147483647&v=beta&t=axOHBIK-OZ_JehIDssgbtwV-eLDahqypusaR7Et3jPc" style="width:36px;height:36px;object-fit:contain" alt="Halian"/>
+        </div>
+        <div class="exp-date">May 2024 – Sept 2024</div>
+        <div class="exp-company">Halian International</div>
+        <div class="exp-loc">Toronto, ON</div>
+      </div>
+      <div class="exp-right">
+        <div class="exp-role">Project Coordinator Intern</div>
+        <div class="exp-type">Internship</div>
+        <ul class="exp-bullets">
+          <li>Coordinated project tasks, schedules, and documentation across cross-functional teams.</li>
+          <li>Facilitated stakeholder communication to maintain alignment and support on-time project delivery.</li>
+          <li>Tracked deliverables and maintained project records to support milestone completion.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-left">
+        <div class="exp-logo" style="background:#0a0a0a;border:1px solid #222;padding:3px">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACjUlEQVR4AYXSM6AcXQCG4ffcObOzmL2La4a/bds2m9jq0sTq0sRGnSq2bdvX1hqD2Hr776k+ads2Z8OV3J1UJE5FZfLKhczbtZQ3n36FU/WVPBssDJRm+gYtOb3/z1cKOk1d22/6bAmP7iqOvAopNl7bSk5cd3F/byvagur24tZfzgV4JGBjoalONNt+YePpndviUgSQGuhZYKUwUzFxG9AcGnenKAo+qZNhGU+VNV3ejs/vR/NBIgSGic/la8h2eC/dBhpaGrg7VZEYWoJ1p7fNRc3wowehqYocb/aRjqVPDTJNe1um6uU2sPXwTmzb5lYBt48DFw/9vrPs6MfklEJTBT90fmfZc/nP/ryx6SJmKkHCSN0BWjBBCMyriACkVDjeXPYvQkAsRK4nu3bo1z27bz57kOTVsW0aCMEd4HJ9NcVZ+ehOD0kzTUO4WTvRVvsRbh/EI7z74jvTzzTVNKqqxis5HVh3/gAJI30HMKw0FaEqSkU2mVeRUKTtxXAilo8i0VxeXihuv7Y22YKpWjyVl0+W+0OC0nMH0KRkf81Ztp46wujPurKtcnePVDwEVzHd4Wp8IdjhqFt1EDNSKEKg+UuIp4w7gFPV8GgudJ/OvrITv2+pPNkPbxDaGng6t+PKqnQs3thcyd0h4P9bQCQW7igtni2LVv94sGpfv7Tqhgwboaj8/vb3M58qak9uLIjgwSTAohNbh1gqg00zCW4fCKC+ki+f/2zCR0+9sqstHsLh8sCjgLSChcgAVYdoKxhJgoHSKTmBouGt8TCGZWKY5qMBaaPYloVpG3TKKT31du6zQw9Vly8PJSN3H+zRwMt66Xqv7hJtVuzE83mdVr2R91TZ1sunsG2LJ3UFBvcTuRTFoq8AAAAASUVORK5CYII=" style="width:36px;height:36px;object-fit:contain" alt="Sobeys"/>
+        </div>
+        <div class="exp-date">Nov 2021 – Oct 2025</div>
+        <div class="exp-company">Sobeys</div>
+        <div class="exp-loc">Ontario, Canada</div>
+      </div>
+      <div class="exp-right">
+        <div class="exp-role">Customer Service Specialist</div>
+        <div class="exp-type">Part-time</div>
+        <ul class="exp-bullets">
+          <li>Resolved customer escalations while coordinating with internal teams to maintain service delivery standards.</li>
+          <li>Developed strong communication and problem-solving skills across high-volume customer interactions.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════ TECH MARQUEE ══════════ -->
+<section id="skills">
+  <p class="marquee-label">The Tech Stack</p>
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <div style="overflow:hidden"><div class="marquee-row">
+      <div class="tech-pill"><span class="tech-dot"></span>Python</div>
+      <div class="tech-pill"><span class="tech-dot"></span>SQL</div>
+      <div class="tech-pill"><span class="tech-dot"></span>Bash</div>
+      <div class="tech-pill"><span class="tech-dot"></span>Docker</div>
+      <div class="tech-pill"><span class="tech-dot"></span>FastAPI</div>
+      <div class="tech-pill"><span class="tech-dot"></span>Splunk</div>
+      <div class="tech-pill"><span class="tech-dot"></span>Wireshark</div>
+      <div class="tech-pill"><span class="tech-dot"></span>Linux</div>
+      <div class="tech-pill"><span class="tech-dot"></span>GitHub</div>
+      <div class="tech-pill"><span class="tech-dot"></span>Power BI</div>
+      <div class="tech-pill"><span class="tech-dot"></span>Tableau</div>
+      <div class="tech-pill"><span class="tech-dot"></span>Python</div>
+      <div class="tech-pill"><span class="tech-dot"></span>SQL</div>
+      <div class="tech-pill"><span class="tech-dot"></span>Bash</div>
+      <div class="tech-pill"><span class="tech-dot"></span>Docker</div>
+      <div class="tech-pill"><span class="tech-dot"></span>FastAPI</div>
+      <div class="tech-pill"><span class="tech-dot"></span>Splunk</div>
+      <div class="tech-pill"><span class="tech-dot"></span>Wireshark</div>
+      <div class="tech-pill"><span class="tech-dot"></span>Linux</div>
+      <div class="tech-pill"><span class="tech-dot"></span>GitHub</div>
+      <div class="tech-pill"><span class="tech-dot"></span>Power BI</div>
+      <div class="tech-pill"><span class="tech-dot"></span>Tableau</div>
+    </div></div>
+    <div style="overflow:hidden"><div class="marquee-row rev">
+      <div class="tech-pill"><span class="tech-dot"></span>RAG Pipelines</div>
+      <div class="tech-pill"><span class="tech-dot"></span>ChromaDB</div>
+      <div class="tech-pill"><span class="tech-dot"></span>Claude API</div>
+      <div class="tech-pill"><span class="tech-dot"></span>scikit-learn</div>
+      <div class="tech-pill"><span class="tech-dot"></span>Ollama</div>
+      <div class="tech-pill"><span class="tech-dot"></span>NIST CSF</div>
+      <div class="tech-pill"><span class="tech-dot"></span>MITRE ATT&CK</div>
+      <div class="tech-pill"><span class="tech-dot"></span>pandas</div>
+      <div class="tech-pill"><span class="tech-dot"></span>AWS</div>
+      <div class="tech-pill"><span class="tech-dot"></span>Azure</div>
+      <div class="tech-pill"><span class="tech-dot"></span>TCP/IP</div>
+      <div class="tech-pill"><span class="tech-dot"></span>RAG Pipelines</div>
+      <div class="tech-pill"><span class="tech-dot"></span>ChromaDB</div>
+      <div class="tech-pill"><span class="tech-dot"></span>Claude API</div>
+      <div class="tech-pill"><span class="tech-dot"></span>scikit-learn</div>
+      <div class="tech-pill"><span class="tech-dot"></span>Ollama</div>
+      <div class="tech-pill"><span class="tech-dot"></span>NIST CSF</div>
+      <div class="tech-pill"><span class="tech-dot"></span>MITRE ATT&CK</div>
+      <div class="tech-pill"><span class="tech-dot"></span>pandas</div>
+      <div class="tech-pill"><span class="tech-dot"></span>AWS</div>
+      <div class="tech-pill"><span class="tech-dot"></span>Azure</div>
+      <div class="tech-pill"><span class="tech-dot"></span>TCP/IP</div>
+    </div></div>
+  </div>
+</section>
+
+<!-- ══════════ PROJECTS ══════════ -->
+<section id="projects" class="section-wrap">
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px" class="reveal">
+    <div><p class="eyebrow">What I've Built</p><h2 class="heading" style="margin-bottom:0">Projects <span>Showcase</span></h2></div>
+    <a class="btn-ghost" href="https://github.com/evanoseen" target="_blank">All on GitHub ↗</a>
+  </div>
+  <div class="proj-grid reveal">
+    <div class="proj-card featured">
+      <div class="proj-img-wrap">
+        <img src="kraken.png" alt="Kraken Trading Bot" class="proj-img"/>
+        <div class="proj-img-label">Crypto · AI Signals · Live Trading</div>
+      </div>
+      <div class="proj-top"><span class="proj-num">01</span><a class="proj-link" href="https://github.com/evanoseen/kraken-bot" target="_blank">GitHub ↗</a></div>
+      <div class="proj-title">Automated Crypto Trading Bot</div>
+      <div class="proj-desc">Live trading bot on Kraken exchange using Claude AI to analyze RSS news headlines for buy/sell signals. Includes volume spike detection (3x threshold), new listing monitor, and configurable risk controls (position sizing, daily loss limits). Deployed 24/7 on Hetzner VPS as a systemd service with auto-restart.</div>
+      <div class="proj-tags"><span class="proj-tag">Python</span><span class="proj-tag">Claude API</span><span class="proj-tag">Kraken REST API</span><span class="proj-tag">Linux VPS</span><span class="proj-tag">systemd</span></div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-img-wrap">
+        <img src="phishing.png" alt="Phishing URL Detector" class="proj-img"/>
+        <div class="proj-img-label">ML · Security · 100% Accuracy</div>
+      </div>
+      <div class="proj-top"><span class="proj-num">02</span><a class="proj-link" href="https://github.com/evanoseen/phishing-detector" target="_blank">GitHub ↗</a></div>
+      <div class="proj-title">Phishing URL Detector</div>
+      <div class="proj-desc">ML classifier detecting phishing URLs by extracting 20 structural and content-based features. Trained on 10,000 URLs achieving 100% accuracy. Live Streamlit web app.</div>
+      <div class="proj-tags"><span class="proj-tag">scikit-learn</span><span class="proj-tag">Random Forest</span><span class="proj-tag">Streamlit</span><span class="proj-tag">Python</span></div>
+    </div>
+    <div class="proj-card featured">
+      <div class="proj-banner" style="background:linear-gradient(135deg,rgba(0,212,255,0.1),rgba(0,212,255,0.02));border:1px solid rgba(0,212,255,0.15);color:var(--accent)">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zm0 3a3 3 0 1 1 0 6 3 3 0 0 1 0-6zm0 14.2a7.2 7.2 0 0 1-6-3.22c.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08a7.2 7.2 0 0 1-6 3.22z" fill="#00d4ff"/></svg>
+        RAG · Local LLM · Vector DB
+      </div>
+      <div class="proj-top"><span class="proj-num">03</span><a class="proj-link" href="https://github.com/evanoseen/docmind" target="_blank">GitHub ↗</a></div>
+      <div class="proj-title">DocMind — Local RAG Document Assistant</div>
+      <div class="proj-desc">Full-stack AI app for chatting with uploaded documents (PDF, TXT, MD) using a locally hosted LLM. Semantic chunking, vector embeddings, cosine similarity retrieval, and SSE token streaming. Fully local — no data ever leaves your machine.</div>
+      <div class="proj-tags"><span class="proj-tag">FastAPI</span><span class="proj-tag">ChromaDB</span><span class="proj-tag">Ollama</span><span class="proj-tag">RAG</span><span class="proj-tag">Python</span></div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-img-wrap">
+        <img src="retail.png" alt="Canadian Retail BI Dashboard" class="proj-img"/>
+        <div class="proj-img-label">Analytics · BI · Streamlit</div>
+      </div>
+      <div class="proj-top"><span class="proj-num">04</span><a class="proj-link" href="https://github.com/evanoseen/retail-dashboard" target="_blank">GitHub ↗</a></div>
+      <div class="proj-title">Canadian Retail BI Dashboard</div>
+      <div class="proj-desc">Interactive BI dashboard analyzing 4,800+ retail transactions across Canadian regions with KPI cards, trend lines, and dynamic filters. Deployed on Streamlit Cloud.</div>
+      <div class="proj-tags"><span class="proj-tag">Streamlit</span><span class="proj-tag">Plotly</span><span class="proj-tag">pandas</span></div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-banner" style="background:linear-gradient(135deg,rgba(168,85,247,0.1),rgba(168,85,247,0.02));border:1px solid rgba(168,85,247,0.15);color:#a855f7">
+        <svg viewBox="0 0 24 24" fill="none"><ellipse cx="12" cy="6" rx="8" ry="3" stroke="#a855f7" stroke-width="1.5"/><path d="M4 6v4c0 1.66 3.58 3 8 3s8-1.34 8-3V6" stroke="#a855f7" stroke-width="1.5"/><path d="M4 10v4c0 1.66 3.58 3 8 3s8-1.34 8-3v-4" stroke="#a855f7" stroke-width="1.5"/></svg>
+        SQL · Data · Business Intelligence
+      </div>
+      <div class="proj-top"><span class="proj-num">05</span><a class="proj-link" href="https://github.com/evanoseen/sql-business-analysis" target="_blank">GitHub ↗</a></div>
+      <div class="proj-title">SQL Business Analytics</div>
+      <div class="proj-desc">Normalized SQLite database with 2,200 orders and 300 customers. Eight analytical queries covering revenue, profit margins, customer segmentation, and return rates.</div>
+      <div class="proj-tags"><span class="proj-tag">SQL</span><span class="proj-tag">SQLite</span><span class="proj-tag">pandas</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CERTIFICATIONS ══════════ -->
+<section class="section-wrap" style="padding-top:0">
+  <p class="eyebrow reveal">Credentials</p>
+  <h2 class="heading reveal">Certifi<span>cations</span></h2>
+  <div class="cert-grid reveal">
+    <div class="cert-card">
+      <div class="cert-logo-wrap" style="background:#054ada12;border:1px solid #054ada33">
+        <div class="cert-logo-text" style="color:#054ADA;font-size:1.1rem">IBM</div>
+      </div>
+      <div class="cert-name">Cybersecurity Fundamentals</div><div class="cert-by">IBM</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-logo-wrap" style="background:#ffffff08;border:1px solid #ffffff18">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+        </svg>
+      </div>
+      <div class="cert-name">Cybersecurity Professional Certificate</div><div class="cert-by">Google</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-logo-wrap" style="background:#ffffff08;border:1px solid #ffffff18">
+        <svg viewBox="0 0 21 21" fill="none">
+          <rect x="1" y="1" width="9" height="9" fill="#F25022"/>
+          <rect x="11" y="1" width="9" height="9" fill="#7FBA00"/>
+          <rect x="1" y="11" width="9" height="9" fill="#00A4EF"/>
+          <rect x="11" y="11" width="9" height="9" fill="#FFB900"/>
+        </svg>
+      </div>
+      <div class="cert-name">Azure Fundamentals AZ-900</div><div class="cert-by">Microsoft</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-logo-wrap" style="background:#232F3E;border:1px solid #FF9900;padding:4px">
+        <svg viewBox="0 0 80 48" fill="none" width="48" height="48">
+          <!-- AWS text -->
+          <text x="8" y="22" font-family="Arial,sans-serif" font-weight="900" font-size="18" fill="#FF9900">aws</text>
+          <!-- Smile arrow -->
+          <path d="M8 32 Q40 46 72 32" stroke="#FF9900" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M66 28 L72 32 L66 36" stroke="#FF9900" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="cert-name">Cloud Practitioner</div><div class="cert-by">AWS</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CONTACT ══════════ -->
+<section id="contact">
+  <div class="contact-glow"></div>
+  <div class="contact-inner reveal">
+    <p class="eyebrow" style="text-align:center">Get In Touch</p>
+    <h2 class="contact-heading">Let's<br><span style="color:var(--accent)">Connect.</span></h2>
+    <p class="contact-sub">Actively looking for cybersecurity and AI internships and co-op roles. Open to discussing new opportunities and collaborations.</p>
+    <a class="contact-email" href="mailto:Evan.E.Oseen@gmail.com">Evan.E.Oseen@gmail.com</a>
+    <div class="contact-btns">
+      <a class="btn-main" href="mailto:Evan.E.Oseen@gmail.com">Send Message ✉</a>
+      <a class="btn-ghost" href="https://linkedin.com/in/evanoseen" target="_blank">LinkedIn ↗</a>
+      <a class="btn-ghost" href="https://github.com/evanoseen" target="_blank">GitHub ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">evan<span>.oseen</span></div>
+  <div class="footer-copy">Toronto, ON · Cybersecurity & AI · 2025</div>
+</footer>
+
+<script>
+  // Intro
+  setTimeout(()=>{
+    const intro=document.getElementById('intro')
+    intro.classList.add('hide')
+    setTimeout(()=>intro.style.display='none',900)
+  },2400)
+
+  // Nav
+  window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',window.scrollY>50))
+
+  // Typing
+  const phrases=['Cybersecurity Analyst.','AI Engineer.','Security Researcher.','Threat Intelligence Analyst.','ML Engineer.']
+  let pi=0,ci=0,del=false
+  const el=document.querySelector('.typed')
+  function type(){
+    const p=phrases[pi]
+    if(!del){el.textContent=p.slice(0,++ci);if(ci===p.length){del=true;setTimeout(type,2000);return}}
+    else{el.textContent=p.slice(0,--ci);if(ci===0){del=false;pi=(pi+1)%phrases.length}}
+    setTimeout(type,del?45:80)
+  }
+  type()
+
+  // Reveal on scroll
+  const obs=new IntersectionObserver(e=>{
+    e.forEach(el=>{if(el.isIntersecting){el.target.classList.add('visible');obs.unobserve(el.target)}})
+  },{threshold:0.08})
+  document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>obs.observe(el))
+</script>
+</body>
+</html>
