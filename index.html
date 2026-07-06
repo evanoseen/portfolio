@@ -3,16 +3,21 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>Evan Oseen</title>
+  <title>Evan Oseen | Cybersecurity & AI</title>
+  <meta name="description" content="Evan Oseen is a cybersecurity and AI builder studying Business Technology Management at Toronto Metropolitan University. Live trading bots, phishing detection ML, RAG applications, and security tooling, all running in production."/>
+  <meta property="og:title" content="Evan Oseen | Cybersecurity & AI"/>
+  <meta property="og:description" content="Cybersecurity and AI builder. Live trading bots, phishing detection ML, RAG applications, and security tooling running in production."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://www.evanoseen.com"/>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polygon points='50,2 98,26 98,74 50,98 2,74 2,26' fill='%2300d4ff'/><text x='50' y='62' text-anchor='middle' fill='%23000' font-size='34' font-family='Arial,sans-serif' font-weight='900'>EO</text></svg>"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
   <style>
     /* v2 redesign, mobile-first */
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     :root{
-      --bg:#000;
-      --surface:#0a0a0a;
-      --card:#0d0f12;
+      --bg:#05070a;
+      --surface:#0a0d11;
+      --card:#0c1015;
       --border:rgba(255,255,255,0.08);
       --border-soft:rgba(255,255,255,0.05);
       --accent:#00d4ff;
@@ -56,6 +61,14 @@
     .nav-links{display:none;gap:36px;list-style:none}
     .nav-links a{color:var(--muted2);font-size:0.88rem;font-weight:500;transition:color 0.2s}
     .nav-links a:hover{color:#fff}
+    .nav-right{display:flex;align-items:center;gap:10px}
+    .nav-resume{
+      display:inline-flex;align-items:center;gap:6px;
+      background:var(--accent);color:#000;font-weight:700;font-size:0.78rem;
+      padding:9px 16px;border-radius:8px;white-space:nowrap;
+      transition:background 0.2s,transform 0.2s;
+    }
+    .nav-resume:hover{background:var(--accent2);transform:translateY(-1px)}
     .nav-burger{
       display:flex;flex-direction:column;justify-content:center;gap:5px;
       width:44px;height:44px;padding:10px;background:transparent;
@@ -143,7 +156,11 @@
       font-size:clamp(3rem,11vw,6.2rem);font-weight:900;
       line-height:0.95;margin-bottom:16px;letter-spacing:-0.03em;
     }
-    .hero-headline .accent{color:var(--accent)}
+    .hero-headline .accent{
+      background:linear-gradient(115deg,#00d4ff 15%,#0090ff 70%,#7dd8ff 100%);
+      -webkit-background-clip:text;background-clip:text;
+      color:transparent;
+    }
     .hero-role{font-size:clamp(0.92rem,2.6vw,1.05rem);margin-bottom:10px;color:var(--muted2)}
     .hero-role .typed{color:var(--accent);font-weight:600}
     .cursor{display:inline-block;width:2px;height:1em;background:var(--accent);margin-left:2px;vertical-align:middle;animation:blink 1s step-end infinite}
@@ -181,7 +198,9 @@
 
     /* ── SECTION COMMONS ── */
     .section-wrap{padding:var(--pad-y) var(--pad-x);max-width:1200px;margin:0 auto}
-    .eyebrow{font-family:var(--mono);font-size:0.7rem;color:var(--accent);letter-spacing:3px;text-transform:uppercase;margin-bottom:14px}
+    .eyebrow{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:0.7rem;color:var(--accent);letter-spacing:3px;text-transform:uppercase;margin-bottom:14px}
+    .eyebrow::before{content:'';width:22px;height:1px;background:var(--accent);flex:none;opacity:0.7}
+    .contact-inner .eyebrow{justify-content:center}
     .heading{font-size:clamp(1.9rem,6.5vw,2.8rem);font-weight:800;letter-spacing:-0.02em;margin-bottom:clamp(28px,6vw,48px)}
     .heading span{color:var(--accent)}
 
@@ -240,22 +259,32 @@
     }
     .exp-bullets li::before{content:'▸';position:absolute;left:0;color:var(--accent);font-size:0.65rem;top:5px}
 
-    /* ── MARQUEE ── */
-    #skills{overflow:hidden;border-top:1px solid var(--border-soft);border-bottom:1px solid var(--border-soft);padding:clamp(40px,7vw,60px) 0}
-    .marquee-label{text-align:center;font-family:var(--mono);font-size:0.68rem;color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-bottom:28px}
-    .marquee-mask{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
-    .marquee-row{display:flex;width:max-content;animation:marquee 28s linear infinite}
-    .marquee-row.rev{animation-direction:reverse;animation-duration:22s}
-    @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-    .tech-pill{
+    /* ── SKILLS ── */
+    .skills-grid{display:grid;grid-template-columns:1fr;gap:14px}
+    .skill-group{
+      background:var(--card);border:1px solid var(--border-soft);
+      border-radius:16px;padding:22px;min-width:0;
+      transition:border-color 0.2s;
+    }
+    .skill-group:hover{border-color:rgba(0,212,255,0.2)}
+    .skill-group-title{
       display:flex;align-items:center;gap:8px;
-      padding:9px 18px;margin:4px 5px;
+      font-family:var(--mono);font-size:0.7rem;color:var(--accent);
+      letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;
+    }
+    .skill-group-title svg{width:15px;height:15px;flex-shrink:0}
+    .skill-pills{display:flex;flex-wrap:wrap;gap:8px}
+    .tech-pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 15px;
       border:1px solid var(--border);border-radius:999px;
-      font-size:0.78rem;font-weight:500;white-space:nowrap;
+      font-size:0.76rem;font-weight:500;white-space:nowrap;
       transition:border-color 0.2s;
     }
     .tech-pill:hover{border-color:var(--accent)}
     .tech-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0}
+    @media(min-width:720px){.skills-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(min-width:1024px){.skills-grid{grid-template-columns:repeat(2,1fr);gap:18px}}
 
     /* ── PROJECTS ── */
     .proj-grid{display:grid;grid-template-columns:1fr;gap:16px}
@@ -352,46 +381,6 @@
     .reveal-right{opacity:0;transform:translateX(24px);transition:opacity 0.6s,transform 0.6s}
     .reveal-right.visible{opacity:1;transform:translateX(0)}
 
-    /* ── INTRO ── */
-    #intro{
-      position:fixed;inset:0;background:#000;z-index:9999;
-      display:flex;align-items:center;justify-content:center;
-      flex-direction:column;gap:18px;
-    }
-    #intro.hide{
-      animation:introSlideUp 0.7s cubic-bezier(0.76,0,0.24,1) forwards;
-      pointer-events:none;
-    }
-    @keyframes introSlideUp{
-      0%{transform:translateY(0)}
-      100%{transform:translateY(-100%)}
-    }
-    #intro-logo{
-      width:72px;height:72px;background:var(--accent);
-      clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
-      display:flex;align-items:center;justify-content:center;
-      font-weight:900;font-size:1.5rem;color:#000;font-family:'Inter',sans-serif;
-      opacity:0;animation:logoIn 0.5s cubic-bezier(0.16,1,0.3,1) 0.15s forwards;
-    }
-    #intro-name{
-      font-family:'JetBrains Mono',monospace;font-size:0.72rem;
-      letter-spacing:8px;color:#fff;text-transform:uppercase;
-      opacity:0;animation:nameIn 0.5s ease 0.5s forwards;
-    }
-    #intro-bar{
-      width:0;height:1px;background:var(--accent);
-      animation:barIn 0.4s ease 0.9s forwards;
-    }
-    @keyframes logoIn{
-      from{opacity:0;transform:scale(0.4) rotate(-40deg)}
-      to{opacity:1;transform:scale(1) rotate(0deg)}
-    }
-    @keyframes nameIn{
-      from{opacity:0;letter-spacing:16px;transform:translateY(8px)}
-      to{opacity:1;letter-spacing:8px;transform:translateY(0)}
-    }
-    @keyframes barIn{from{width:0}to{width:100px}}
-
     /* ── TABLET ≥720px ── */
     @media(min-width:720px){
       .hero-btns{width:auto}
@@ -431,20 +420,12 @@
     @media(prefers-reduced-motion:reduce){
       html{scroll-behavior:auto}
       .reveal,.reveal-left,.reveal-right{opacity:1;transform:none;transition:none}
-      .marquee-row{animation:none}
       .hero-photo-ring{animation:none}
       *{transition-duration:0.01ms!important;animation-duration:0.01ms!important}
     }
   </style>
 </head>
 <body>
-
-<!-- INTRO -->
-<div id="intro">
-  <div id="intro-logo">EO</div>
-  <div id="intro-name">Evan Oseen</div>
-  <div id="intro-bar"></div>
-</div>
 
 <!-- NAV -->
 <div id="progress"></div>
@@ -457,9 +438,12 @@
     <li><a href="#projects">Projects</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <button id="burger" class="nav-burger" aria-label="Open menu" aria-expanded="false">
-    <span></span><span></span><span></span>
-  </button>
+  <div class="nav-right">
+    <a class="nav-resume" href="EvanOResume.pdf" download="EvanOseen_Resume.pdf">Resume ↓</a>
+    <button id="burger" class="nav-burger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
 <div id="mobile-menu">
   <a href="#about"><span class="mnum">01</span>About</a>
@@ -643,58 +627,66 @@
   </div>
 </section>
 
-<!-- ══════════ TECH MARQUEE ══════════ -->
-<section id="skills">
-  <p class="marquee-label">The Tech Stack</p>
-  <div style="display:flex;flex-direction:column;gap:10px">
-    <div class="marquee-mask"><div class="marquee-row">
-      <div class="tech-pill"><span class="tech-dot"></span>Python</div>
-      <div class="tech-pill"><span class="tech-dot"></span>SQL</div>
-      <div class="tech-pill"><span class="tech-dot"></span>Bash</div>
-      <div class="tech-pill"><span class="tech-dot"></span>Docker</div>
-      <div class="tech-pill"><span class="tech-dot"></span>FastAPI</div>
-      <div class="tech-pill"><span class="tech-dot"></span>Splunk</div>
-      <div class="tech-pill"><span class="tech-dot"></span>Wireshark</div>
-      <div class="tech-pill"><span class="tech-dot"></span>Linux</div>
-      <div class="tech-pill"><span class="tech-dot"></span>GitHub</div>
-      <div class="tech-pill"><span class="tech-dot"></span>Power BI</div>
-      <div class="tech-pill"><span class="tech-dot"></span>Tableau</div>
-      <div class="tech-pill"><span class="tech-dot"></span>Python</div>
-      <div class="tech-pill"><span class="tech-dot"></span>SQL</div>
-      <div class="tech-pill"><span class="tech-dot"></span>Bash</div>
-      <div class="tech-pill"><span class="tech-dot"></span>Docker</div>
-      <div class="tech-pill"><span class="tech-dot"></span>FastAPI</div>
-      <div class="tech-pill"><span class="tech-dot"></span>Splunk</div>
-      <div class="tech-pill"><span class="tech-dot"></span>Wireshark</div>
-      <div class="tech-pill"><span class="tech-dot"></span>Linux</div>
-      <div class="tech-pill"><span class="tech-dot"></span>GitHub</div>
-      <div class="tech-pill"><span class="tech-dot"></span>Power BI</div>
-      <div class="tech-pill"><span class="tech-dot"></span>Tableau</div>
-    </div></div>
-    <div class="marquee-mask"><div class="marquee-row rev">
-      <div class="tech-pill"><span class="tech-dot"></span>RAG Pipelines</div>
-      <div class="tech-pill"><span class="tech-dot"></span>ChromaDB</div>
-      <div class="tech-pill"><span class="tech-dot"></span>Claude API</div>
-      <div class="tech-pill"><span class="tech-dot"></span>scikit-learn</div>
-      <div class="tech-pill"><span class="tech-dot"></span>Ollama</div>
-      <div class="tech-pill"><span class="tech-dot"></span>NIST CSF</div>
-      <div class="tech-pill"><span class="tech-dot"></span>MITRE ATT&CK</div>
-      <div class="tech-pill"><span class="tech-dot"></span>pandas</div>
-      <div class="tech-pill"><span class="tech-dot"></span>AWS</div>
-      <div class="tech-pill"><span class="tech-dot"></span>Azure</div>
-      <div class="tech-pill"><span class="tech-dot"></span>TCP/IP</div>
-      <div class="tech-pill"><span class="tech-dot"></span>RAG Pipelines</div>
-      <div class="tech-pill"><span class="tech-dot"></span>ChromaDB</div>
-      <div class="tech-pill"><span class="tech-dot"></span>Claude API</div>
-      <div class="tech-pill"><span class="tech-dot"></span>scikit-learn</div>
-      <div class="tech-pill"><span class="tech-dot"></span>Ollama</div>
-      <div class="tech-pill"><span class="tech-dot"></span>NIST CSF</div>
-      <div class="tech-pill"><span class="tech-dot"></span>MITRE ATT&CK</div>
-      <div class="tech-pill"><span class="tech-dot"></span>pandas</div>
-      <div class="tech-pill"><span class="tech-dot"></span>AWS</div>
-      <div class="tech-pill"><span class="tech-dot"></span>Azure</div>
-      <div class="tech-pill"><span class="tech-dot"></span>TCP/IP</div>
-    </div></div>
+<!-- ══════════ SKILLS ══════════ -->
+<section id="skills" class="section-wrap" style="padding-top:0">
+  <p class="eyebrow reveal">The Tech Stack</p>
+  <h2 class="heading reveal">Skills <span>Snapshot</span></h2>
+  <div class="skills-grid reveal">
+    <div class="skill-group">
+      <div class="skill-group-title">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        Security
+      </div>
+      <div class="skill-pills">
+        <div class="tech-pill"><span class="tech-dot"></span>NIST CSF</div>
+        <div class="tech-pill"><span class="tech-dot"></span>MITRE ATT&CK</div>
+        <div class="tech-pill"><span class="tech-dot"></span>Splunk</div>
+        <div class="tech-pill"><span class="tech-dot"></span>Wireshark</div>
+        <div class="tech-pill"><span class="tech-dot"></span>Linux</div>
+        <div class="tech-pill"><span class="tech-dot"></span>TCP/IP</div>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.8"/></svg>
+        AI &amp; Machine Learning
+      </div>
+      <div class="skill-pills">
+        <div class="tech-pill"><span class="tech-dot"></span>Claude API</div>
+        <div class="tech-pill"><span class="tech-dot"></span>RAG Pipelines</div>
+        <div class="tech-pill"><span class="tech-dot"></span>ChromaDB</div>
+        <div class="tech-pill"><span class="tech-dot"></span>Ollama</div>
+        <div class="tech-pill"><span class="tech-dot"></span>scikit-learn</div>
+        <div class="tech-pill"><span class="tech-dot"></span>pandas</div>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M4 19V9M10 19V5M16 19v-7M21 19H3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        Data &amp; Cloud
+      </div>
+      <div class="skill-pills">
+        <div class="tech-pill"><span class="tech-dot"></span>SQL</div>
+        <div class="tech-pill"><span class="tech-dot"></span>Power BI</div>
+        <div class="tech-pill"><span class="tech-dot"></span>Tableau</div>
+        <div class="tech-pill"><span class="tech-dot"></span>AWS</div>
+        <div class="tech-pill"><span class="tech-dot"></span>Azure</div>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M8 6l-5 6 5 6M16 6l5 6-5 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Engineering
+      </div>
+      <div class="skill-pills">
+        <div class="tech-pill"><span class="tech-dot"></span>Python</div>
+        <div class="tech-pill"><span class="tech-dot"></span>TypeScript</div>
+        <div class="tech-pill"><span class="tech-dot"></span>FastAPI</div>
+        <div class="tech-pill"><span class="tech-dot"></span>Docker</div>
+        <div class="tech-pill"><span class="tech-dot"></span>Bash</div>
+        <div class="tech-pill"><span class="tech-dot"></span>GitHub</div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -879,17 +871,6 @@
 </footer>
 
 <script>
-  // Intro (short; skipped entirely for reduced motion)
-  const intro=document.getElementById('intro')
-  if(matchMedia('(prefers-reduced-motion: reduce)').matches){
-    intro.style.display='none'
-  }else{
-    setTimeout(()=>{
-      intro.classList.add('hide')
-      setTimeout(()=>intro.style.display='none',700)
-    },1300)
-  }
-
   // Nav
   window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',window.scrollY>50),{passive:true})
 
@@ -920,7 +901,7 @@
   }))
 
   // Typing
-  const phrases=['Cybersecurity Analyst.','AI Engineer.','Security Researcher.','Threat Intelligence Analyst.','ML Engineer.']
+  const phrases=['Cybersecurity Analyst.','AI Engineer.','Security Researcher.','Threat Intelligence Analyst.']
   let pi=0,ci=0,del=false
   const el=document.querySelector('.typed')
   function type(){
