@@ -724,33 +724,33 @@
   <div class="proj-grid reveal">
     <div class="proj-card featured">
       <div class="proj-img-wrap">
-        <img src="kraken.png" alt="Kraken Trading Bot" class="proj-img"/>
-        <div class="proj-img-label">Crypto · AI Signals · Live Trading</div>
+        <img src="eval.png" alt="Multi Turn Cyber Refusal Eval results" class="proj-img" style="object-position:center"/>
+        <div class="proj-img-label">AI Safety · LLM Evals · MITRE ATT&amp;CK</div>
       </div>
-      <div class="proj-top"><span class="proj-num">01</span><a class="proj-link" href="https://github.com/evanoseen/kraken-bot" target="_blank">GitHub ↗</a></div>
-      <div class="proj-title">Automated Crypto Trading Bot</div>
-      <div class="proj-desc">Trading bot running live on Kraken that uses Claude AI to read news headlines and decide when to buy or sell. Built in volume spike detection, a new coin listing monitor, and configurable risk controls. Runs 24/7 on a Hetzner VPS as a systemd service.</div>
-      <div class="proj-tags"><span class="proj-tag">Python</span><span class="proj-tag">Claude API</span><span class="proj-tag">Kraken REST API</span><span class="proj-tag">Linux VPS</span><span class="proj-tag">systemd</span></div>
+      <div class="proj-top"><span class="proj-num">01</span><a class="proj-link" href="https://github.com/evanoseen/cyber-refusal-eval" target="_blank">GitHub ↗</a></div>
+      <div class="proj-title">Multi Turn Cyber Refusal Eval</div>
+      <div class="proj-desc">AI safety eval built in inspect_ai (UK AISI) testing whether splitting a cyber attack across four conversation turns gets past LLM refusals. 15 sanitized attack chains across 5 MITRE ATT&amp;CK tactics, 3 open weight models, 90 scored cells. gpt-oss-120b refused every single turn request but only 6.7% of the decomposed ones. The Claude judge was validated against a hand labeled golden set (Cohen's κ 0.655).</div>
+      <div class="proj-tags"><span class="proj-tag">Python</span><span class="proj-tag">inspect_ai</span><span class="proj-tag">Claude API</span><span class="proj-tag">LLM Evaluation</span><span class="proj-tag">Bootstrap CIs</span></div>
     </div>
     <div class="proj-card">
       <div class="proj-img-wrap">
         <img src="phishing.png" alt="Phishing URL Detector" class="proj-img"/>
-        <div class="proj-img-label">ML · Security · 100% Accuracy</div>
+        <div class="proj-img-label">ML · Security · 98%+ Accuracy</div>
       </div>
       <div class="proj-top"><span class="proj-num">02</span><a class="proj-link" href="https://github.com/evanoseen/phishing-detector" target="_blank">GitHub ↗</a></div>
       <div class="proj-title">Phishing URL Detector</div>
-      <div class="proj-desc">Random Forest classifier that flags phishing URLs by analyzing 20 structural features from the URL itself. Trained on 10,000 URLs and hits 100% accuracy on the test set. Deployed as a live Streamlit app.</div>
+      <div class="proj-desc">Random Forest classifier that flags phishing URLs by analyzing 20 structural features from the URL itself. Trained on 10,000 URLs and hits 98%+ accuracy on the test set. Deployed as a live Streamlit app.</div>
       <div class="proj-tags"><span class="proj-tag">scikit-learn</span><span class="proj-tag">Random Forest</span><span class="proj-tag">Streamlit</span><span class="proj-tag">Python</span></div>
     </div>
     <div class="proj-card featured">
       <div class="proj-img-wrap">
-        <img src="docmind.png" alt="DocMind RAG App" class="proj-img"/>
-        <div class="proj-img-label">RAG · Local LLM · Vector DB</div>
+        <img src="kraken.png" alt="Kraken Trading Bot" class="proj-img"/>
+        <div class="proj-img-label">Crypto · AI Signals · Live Trading</div>
       </div>
-      <div class="proj-top"><span class="proj-num">03</span><a class="proj-link" href="https://github.com/evanoseen/docmind" target="_blank">GitHub ↗</a></div>
-      <div class="proj-title">DocMind — Local RAG Document Assistant</div>
-      <div class="proj-desc">Upload a PDF, text file, or markdown doc and ask questions about it. Uses a locally hosted LLM through Ollama, with ChromaDB handling the vector search and retrieval. Nothing ever touches an external server.</div>
-      <div class="proj-tags"><span class="proj-tag">FastAPI</span><span class="proj-tag">ChromaDB</span><span class="proj-tag">Ollama</span><span class="proj-tag">RAG</span><span class="proj-tag">Python</span></div>
+      <div class="proj-top"><span class="proj-num">03</span><a class="proj-link" href="https://github.com/evanoseen/kraken-bot" target="_blank">GitHub ↗</a></div>
+      <div class="proj-title">Automated Crypto Trading Bot</div>
+      <div class="proj-desc">Trading bot running live on Kraken that uses Claude AI to read news headlines and decide when to buy or sell. Built in volume spike detection, a new coin listing monitor, and configurable risk controls. Runs 24/7 on a Hetzner VPS as a systemd service.</div>
+      <div class="proj-tags"><span class="proj-tag">Python</span><span class="proj-tag">Claude API</span><span class="proj-tag">Kraken REST API</span><span class="proj-tag">Linux VPS</span><span class="proj-tag">systemd</span></div>
     </div>
     <div class="proj-card">
       <div class="proj-banner" style="background:linear-gradient(135deg,rgba(59,130,246,0.1),rgba(59,130,246,0.02));border:1px solid rgba(59,130,246,0.15);color:#3b82f6">
@@ -762,22 +762,42 @@
       <div class="proj-desc">Stock and ETF trading bot for Interactive Brokers, running live with real money. Claude reads financial news headlines for buy and sell signals, and a momentum scanner watches a 23 symbol watchlist for volume spikes. Stop losses, take profits, and a daily loss cap keep risk contained.</div>
       <div class="proj-tags"><span class="proj-tag">Python</span><span class="proj-tag">Claude API</span><span class="proj-tag">IBKR API</span><span class="proj-tag">Risk Controls</span></div>
     </div>
+    <div class="proj-card featured">
+      <div class="proj-img-wrap">
+        <img src="docmind.png" alt="DocMind RAG App" class="proj-img"/>
+        <div class="proj-img-label">RAG · Local LLM · Vector DB</div>
+      </div>
+      <div class="proj-top"><span class="proj-num">05</span><a class="proj-link" href="https://github.com/evanoseen/docmind" target="_blank">GitHub ↗</a></div>
+      <div class="proj-title">DocMind — Local RAG Document Assistant</div>
+      <div class="proj-desc">Upload a PDF, text file, or markdown doc and ask questions about it. Uses a locally hosted LLM through Ollama, with ChromaDB handling the vector search and retrieval. Nothing ever touches an external server.</div>
+      <div class="proj-tags"><span class="proj-tag">FastAPI</span><span class="proj-tag">ChromaDB</span><span class="proj-tag">Ollama</span><span class="proj-tag">RAG</span><span class="proj-tag">Python</span></div>
+    </div>
     <div class="proj-card">
       <div class="proj-banner" style="background:linear-gradient(135deg,rgba(20,184,166,0.1),rgba(20,184,166,0.02));border:1px solid rgba(20,184,166,0.15);color:#14b8a6">
         <svg viewBox="0 0 24 24" fill="none"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z" stroke="#14b8a6" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="#14b8a6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         GRC · NIST CSF · Assessment
       </div>
-      <div class="proj-top"><span class="proj-num">05</span><a class="proj-link" href="https://github.com/evanoseen/csf_profile" target="_blank">GitHub ↗</a></div>
+      <div class="proj-top"><span class="proj-num">06</span><a class="proj-link" href="https://github.com/evanoseen/csf_profile" target="_blank">GitHub ↗</a></div>
       <div class="proj-title">NIST CSF Profile Tool</div>
       <div class="proj-desc">Assessment tool for the NIST Cybersecurity Framework. Track controls, assign ownership, document findings, and score your current security state, then export everything for visualization. Built for real GRC workflows, not checkbox compliance.</div>
       <div class="proj-tags"><span class="proj-tag">React</span><span class="proj-tag">TypeScript</span><span class="proj-tag">NIST CSF</span></div>
+    </div>
+    <div class="proj-card featured">
+      <div class="proj-img-wrap">
+        <img src="retail.png" alt="Canadian Retail BI Dashboard" class="proj-img"/>
+        <div class="proj-img-label">Analytics · BI · Streamlit</div>
+      </div>
+      <div class="proj-top"><span class="proj-num">07</span><a class="proj-link" href="https://github.com/evanoseen/retail-dashboard" target="_blank">GitHub ↗</a></div>
+      <div class="proj-title">Canadian Retail BI Dashboard</div>
+      <div class="proj-desc">BI dashboard breaking down 4,800+ retail transactions by region, product, and time period. KPI cards, trend charts, and filters that actually update in real time. Deployed on Streamlit Cloud.</div>
+      <div class="proj-tags"><span class="proj-tag">Streamlit</span><span class="proj-tag">Plotly</span><span class="proj-tag">pandas</span></div>
     </div>
     <div class="proj-card">
       <div class="proj-banner" style="background:linear-gradient(135deg,rgba(239,68,68,0.1),rgba(239,68,68,0.02));border:1px solid rgba(239,68,68,0.15);color:#ef4444">
         <svg viewBox="0 0 24 24" fill="none"><path d="M12 3l9 16H3l9-16z" stroke="#ef4444" stroke-width="1.5" stroke-linejoin="round"/><path d="M12 10v4" stroke="#ef4444" stroke-width="1.5" stroke-linecap="round"/><circle cx="12" cy="16.5" r="0.5" fill="#ef4444" stroke="#ef4444"/></svg>
         Threat Intel · Automation
       </div>
-      <div class="proj-top"><span class="proj-num">06</span><a class="proj-link" href="https://github.com/evanoseen/cyber-threat-briefing" target="_blank">GitHub ↗</a></div>
+      <div class="proj-top"><span class="proj-num">08</span><a class="proj-link" href="https://github.com/evanoseen/cyber-threat-briefing" target="_blank">GitHub ↗</a></div>
       <div class="proj-title">Cyber Threat Briefing Generator</div>
       <div class="proj-desc">Weekly cyber threat briefing generator for corporate intranets. Pulls from the Simply Cyber newsletter, YouTube hot takes, and news articles, then uses Claude to write a security briefing employees will actually read.</div>
       <div class="proj-tags"><span class="proj-tag">TypeScript</span><span class="proj-tag">Bun</span><span class="proj-tag">Claude API</span><span class="proj-tag">RSS</span></div>
@@ -787,7 +807,7 @@
         <svg viewBox="0 0 24 24" fill="none"><path d="M4 6a2 2 0 012-2h12a2 2 0 012 2v9a2 2 0 01-2 2H9l-5 4V6z" stroke="#5865F2" stroke-width="1.5" stroke-linejoin="round"/><circle cx="9" cy="10.5" r="0.5" fill="#5865F2" stroke="#5865F2"/><circle cx="15" cy="10.5" r="0.5" fill="#5865F2" stroke="#5865F2"/></svg>
         Discord · AI Summaries
       </div>
-      <div class="proj-top"><span class="proj-num">07</span><a class="proj-link" href="https://github.com/evanoseen/discord-digest" target="_blank">GitHub ↗</a></div>
+      <div class="proj-top"><span class="proj-num">09</span><a class="proj-link" href="https://github.com/evanoseen/discord-digest" target="_blank">GitHub ↗</a></div>
       <div class="proj-title">Discord Digest</div>
       <div class="proj-desc">AI powered weekly digest for any Discord server. Export the channels you care about, and Claude turns thousands of messages into a clean summary of the conversations that actually mattered. Built during my internship, then rebuilt server agnostic for anyone to use.</div>
       <div class="proj-tags"><span class="proj-tag">Python</span><span class="proj-tag">Claude API</span><span class="proj-tag">Discord</span></div>
@@ -797,27 +817,17 @@
         <svg viewBox="0 0 24 24" fill="none"><path d="M5 13l1.5-4.5A2 2 0 018.4 7h7.2a2 2 0 011.9 1.5L19 13" stroke="#f97316" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 13h16v4a1 1 0 01-1 1h-1a1 1 0 01-1-1v-1H7v1a1 1 0 01-1 1H5a1 1 0 01-1-1v-4z" stroke="#f97316" stroke-width="1.5" stroke-linejoin="round"/></svg>
         Scraping · Telegram Alerts
       </div>
-      <div class="proj-top"><span class="proj-num">08</span><a class="proj-link" href="https://github.com/evanoseen/fb-car-bot" target="_blank">GitHub ↗</a></div>
+      <div class="proj-top"><span class="proj-num">10</span><a class="proj-link" href="https://github.com/evanoseen/fb-car-bot" target="_blank">GitHub ↗</a></div>
       <div class="proj-title">Marketplace Car Deal Bot</div>
       <div class="proj-desc">Self-hosted bot that watches Facebook Marketplace for used car deals across the GTA. Filters listings by make, model, year, price, and mileage, then sends matches straight to Telegram. Runs 24/7 on a VPS as a systemd service.</div>
       <div class="proj-tags"><span class="proj-tag">Node.js</span><span class="proj-tag">TypeScript</span><span class="proj-tag">Playwright</span><span class="proj-tag">Telegram</span></div>
-    </div>
-    <div class="proj-card">
-      <div class="proj-img-wrap">
-        <img src="retail.png" alt="Canadian Retail BI Dashboard" class="proj-img"/>
-        <div class="proj-img-label">Analytics · BI · Streamlit</div>
-      </div>
-      <div class="proj-top"><span class="proj-num">09</span><a class="proj-link" href="https://github.com/evanoseen/retail-dashboard" target="_blank">GitHub ↗</a></div>
-      <div class="proj-title">Canadian Retail BI Dashboard</div>
-      <div class="proj-desc">BI dashboard breaking down 4,800+ retail transactions by region, product, and time period. KPI cards, trend charts, and filters that actually update in real time. Deployed on Streamlit Cloud.</div>
-      <div class="proj-tags"><span class="proj-tag">Streamlit</span><span class="proj-tag">Plotly</span><span class="proj-tag">pandas</span></div>
     </div>
     <div class="proj-card">
       <div class="proj-banner" style="background:linear-gradient(135deg,rgba(168,85,247,0.1),rgba(168,85,247,0.02));border:1px solid rgba(168,85,247,0.15);color:#a855f7">
         <svg viewBox="0 0 24 24" fill="none"><ellipse cx="12" cy="6" rx="8" ry="3" stroke="#a855f7" stroke-width="1.5"/><path d="M4 6v4c0 1.66 3.58 3 8 3s8-1.34 8-3V6" stroke="#a855f7" stroke-width="1.5"/><path d="M4 10v4c0 1.66 3.58 3 8 3s8-1.34 8-3v-4" stroke="#a855f7" stroke-width="1.5"/></svg>
         SQL · Data · Business Intelligence
       </div>
-      <div class="proj-top"><span class="proj-num">10</span><a class="proj-link" href="https://github.com/evanoseen/sql-business-analysis" target="_blank">GitHub ↗</a></div>
+      <div class="proj-top"><span class="proj-num">11</span><a class="proj-link" href="https://github.com/evanoseen/sql-business-analysis" target="_blank">GitHub ↗</a></div>
       <div class="proj-title">SQL Business Analytics</div>
       <div class="proj-desc">Normalized SQLite database with 2,200 orders and 300 customers, built from scratch. Eight SQL queries that surface things like profit margins by category, return rates, and customer segments.</div>
       <div class="proj-tags"><span class="proj-tag">SQL</span><span class="proj-tag">SQLite</span><span class="proj-tag">pandas</span></div>
